@@ -1,5 +1,12 @@
 ---
 title: "Week1_Test"
+
+knit: (function(input_file, encoding) {
+    out_dir <- 'docs';
+    rmarkdown::render(input_file,
+      encoding=encoding,
+      output_file=file.path(dirname(input_file), out_dir, 'index.pdf'))})
+
 author: "siddharth"
 date: "8/24/2022"
 output: pdf_document
