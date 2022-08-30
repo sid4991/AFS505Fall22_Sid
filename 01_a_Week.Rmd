@@ -1,0 +1,543 @@
+---
+title: "Introduction to R, Data types and Data Structure in R"
+author: :"Siddharth Chaudhary"
+subtitle: "Data in R, Fall 2022"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# --------------
+## Getting help
+# --------------
+
+
+```{r}
+help(sqrt)
+?sqrt
+help.start()
+```
+
+# --------------
+## basic operations
+# --------------
+
+```{r}
+2+2
+2-3*4
+(2-3)*4
+5/9*4
+3^2   # 3 to the power of 2
+
+5 < 4
+
+3 == 3   # this is a test, are these values equal?
+
+6/3 != 2  # this is a test, are these values NOT equal
+
+8/2 <= 4  # this is a test, is the left side value less than or equal to the right side?
+```
+
+# --------------
+## Basic functions
+# --------------
+
+```{r}
+sqrt(4)   #square root of four
+sqrt(9)   #notice that comments after the pound sign are ignored
+
+# notice that case matters in R
+sqrt(9)
+
+print("Help! I've been abducted by aliens!!!")
+
+cat("Help!\n\n", "I've been abducted by smart aliens!!!", sep="")
+
+```
+
+Notice that the output dumps onto the console. Whatever is dumped to the console is not retained.
+
+We can change that by assigning the results to a object.
+
+```{r}
+my_results <- sqrt(9)
+my_results
+#My_results   # case matters
+
+my_results = sqrt(16)
+my_results
+
+# Better practice is to use assignment operator
+```
+
+# --------------
+## command separation
+# --------------
+
+```{r}
+print("blah")
+print("ughh")
+print("really?")
+
+print("blah"); print("ughh"); print("really?")  # semi colons for separation
+# we can also string a command across multiple lines, though this is not good practice
+
+# notice that R adds a + sign to the new line to indicate continuation of the command
+print("blah"
+)
+```
+
+In this lecture, you will learn about the most basic data structure in R.
+# --------------
+# Part 1 - Basic data types
+# --------------
+
+There are four common types of data in R: double (numeric), integer, logical and character. (We won't work with raw or complex values.)
+
+# --------------
+## Numeric
+# --------------
+
+**double** or **numeric** vector
+```{r double vector typeof}
+vect_dbl <- c(1.1,-2.5,4,6,2.2,12) # create vector data object
+vect_dbl
+typeof(vect_dbl)
+```
+
+We can also examine a data object using the **str** structure function.
+```{r str command}
+str(vect_dbl)
+```
+
+Notice that the **str** function tells us this is numeric data!
+
+# --------------
+## integer
+# --------------
+
+**integer** vector
+```{r integer vector}
+vect_int <- -1:10 # create vector data object
+vect_int
+typeof(vect_int)
+str(vect_int)
+```
+
+R treats integers the same as numeric values for most functions.
+
+# --------------
+## logical
+# --------------
+
+**logical** vector
+```{r logical vector}
+vect_log <- c(T, FALSE, TRUE, F,T,T) # create vector data object
+vect_log
+typeof(vect_log)
+str(vect_log)
+cat("\nsum of logical vector: ", sum(vect_log))
+```
+
+Note that R treats T and TRUE, F and FALSE as equivalent.
+When treated as numbers, T=1, F=0.
+
+**logical** and numeric vector
+```{r logical and numeric vector}
+vect_log <- c(T, FALSE, TRUE, F,T,T, 5.5) # create vector data object
+vect_log
+typeof(vect_log)
+str(vect_log)
+cat("\nsum of logical vector: ", sum(vect_log))
+```
+
+# --------------
+## character
+# --------------
+
+**character** vector
+```{r character vector}
+vect_chr <- c("Dave", "Vlad","Chuck","Larry","Bob","Mary","Doug","Daryll","Ron","Sue", "Laura", "Rich")
+vect_chr
+typeof(vect_chr)
+str(vect_chr)
+```
+
+Note that each new line in the vector printout is labeled with the vector position. Character values are represented with quotes. 
+
+The structure function will list specific character values as space allows, then...  
+
+**character and numeric** vector
+```{r character and numeric vector}
+vect_chr <- c("Dave", "Vlad","Chuck","Larry","Bob","Mary","Doug","Daryll","Ron","Sue", "Laura", "Rich", 5.5)
+vect_chr
+typeof(vect_chr)
+str(vect_chr)
+```
+
+# --------------
+## Atomic vector
+# --------------
+
+An **atomic vector** or **vector** in R is a one-dimensional data structure. A **vector** holds a string of values, all of the same type, with the string having (practically) any length. You can create a vector using the combine or concatenate **c** function.
+```{r vector 1}
+vect <- c(1,-2,4,6,2.2,12) # create vector data object
+vect  # print data object to the console
+```
+
+Notice how the vector is printed to the console.
+
+You can test whether an object is an atomic vector using two different commands.
+```{r vector test}
+is.atomic(vect)   # more robust test
+is.vector(vect)   # won't always work, depending upon attributes
+```
+
+# --------------
+## Vector properties
+# --------------
+
+We can assign and extract vector properties.
+
+We can obtain the vector length with the following command.
+```{r vector length}
+# length function gives length of a vector (number of values stored)
+length(vect)
+length(c("123456789","0"))
+```
+
+There are six pieces of data, six positions in this vector.
+
+We can name elements in a vector.
+```{r vector name example}
+# Create a vector with my height and weight in SI units (m, kg)
+vect_example <- c(1.75, 70)
+vect_example
+
+cat("\n")   # this prints a line space
+
+#now assign names for meaning, notice these are character strings
+names(vect_example) <- c("height (m)", "weight (kg)")
+vect_example
+
+cat("\n")   # this prints a line space
+names(vect_example) <- c("height (m)", "weight (kg)")
+vect_example
+```
+
+We can also assign vector names when creating the vector.
+```{r vector name}
+# Create a vector with my height and weight in SI units (m, kg)
+vect_example <- c("height (m)"=1.75, "weight(kg)" =70)
+vect_example
+```
+
+We can inquire about vector type using **typeof()** function.
+```{r vector type}
+typeof(vect_example)
+typeof(c("123456789","0"))
+```
+
+"double" means double precision numeric or commonly thought of as "numeric". We will discuss other types of data.
+
+Finally we can inquire about data object attributes.
+```{r vector attributes}
+vect <- c(1,-2,4,6,2.2,12) # create vector data object
+attributes(vect)
+cat("\n")
+attributes(vect_example)
+```
+
+The first vector has no attributes. The second has names. In object oriented programming, data object attributes can be considered "meta data".
+
+# --------------
+## Creating Vectors
+# --------------
+
+You can also create vectors with other commands.
+```{r vector create functions}
+vect_rep <- rep(1.2,times=10) # replicate value 10 times
+vect_rep
+
+vect_seq <- seq(from=1, to=13, by=2) # sequence from 1 to 12 by 2
+vect_seq
+
+vect_seq_by1 <- 1:6 # sequence integers by 1
+vect_seq_by1
+
+vect_seq_by1_neg <- -1:6 # sequence integers by 1
+vect_seq_by1_neg
+
+vect_seq_by1_pr <- -(1:6) # sequence integers by 1
+vect_seq_by1_pr
+```
+
+# --------------
+## Missing values (NA)
+# --------------
+
+All spaces in a vector or matrix must be filled with something. If there is no data for a position, that position is represented by the missing value designation in R, **NA**. Note that a missing value is NOT the same as the character value "NA".
+
+Replace Doug with NA and Sue with "NA".
+```{r character NA vector}
+vect_na <- c("Dave", "Vlad","Chuck","Larry","Bob","Mary",NA,"Daryll","Ron","NA", "Laura", "Rich")
+vect_na
+str(vect_na)
+```
+
+```{r all NA vector}
+vect_rep_na <- rep(NA,85)
+vect_rep_na
+str(vect_rep_na)
+```
+# --------------
+# coerce data types
+# --------------
+We can *coerce* data into a particular type or from one type to another.
+
+## as.character
+
+**as.character** examples
+```{r as.character}
+vect <- c(1.1,-2.5,4,6,2.2,12) # create vector data object
+cat("numeric to character \n")  # cat prints nicely
+vect
+as.character(vect)
+
+# we put a \n in front for an extra return or line
+vect <- -1:8 # create vector data object
+cat("\ninteger to character\n")
+vect
+as.character(vect)
+cat("\n")
+
+vect <- c(T, FALSE, TRUE, F,T,T) # create vector data object
+cat("\nlogical to character\n")
+vect
+as.character(vect)
+```
+
+## as.numeric
+
+**as.numeric** examples
+```{r as.numeric}
+cat("integer to numeric\n")
+vect
+as.numeric(vect)
+str(as.numeric(vect))
+
+cat("\nlogical to numeric\n")
+vect
+as.numeric(vect)
+
+vect <- c("Dave", "Vlad","Chuck","Larry","Bob","Mary","Doug","Daryll","Ron","Sue", "Laura", "Rich")
+cat("\ncharacter to numeric\n")
+vect
+as.numeric(vect)
+```
+
+Oops! Some data can't be coerced!
+
+## as.integer
+
+**as.integer** examples
+```{r as.integer}
+cat("numeric to integer\n")
+vect2 <- c(1.1,-2.6,4,6.6,2.2,12)
+vect2
+as.integer(vect2)
+```
+
+*as.integer* rounds off numeric values, otherwise has effect like **as.numeric**.
+
+## as.logical
+
+**as.logical** examples
+```{r as.logical}
+cat("numeric to logical\n")
+vect1 <- c(1.1,-2.6,0,6.6,2.2,12)
+vect1
+as.logical(vect1)
+
+cat("\ninteger to logical\n")
+vect2
+as.logical(vect2)
+
+cat("\ncharacter to logical\n")
+vect4 <- c("Dave", "Vlad","Chuck","Larry","Bob","Mary","Doug","Daryll","Ron","Sue", "Laura", "TRUE")
+vect4
+as.logical(vect4)
+```
+
+## coercion of mixed data
+
+Finally, data are also coerced when creating a vector, if necessary, since vectors can only contain one type of data.
+```{r coercion vector creation}
+vect5 <- c(T, F, 1, T)
+str(vect5)
+
+cat("\n")
+vect6 <- c(T, F, "bob", T)
+str(vect6)
+
+cat("\n")
+vect7 <- c(1, 2.3, "bob",7)
+str(vect7)
+
+```
+
+Logical is coerced to numeric.
+Everything is coerced to character if there is a character element.
+As we have seen previously, when you combine numeric and integers, a numeric vector results.
+
+**Notes**
+
+* Where coersion fails, NA values result.
+* MANY functions coerse data and objects into what is needed. This can be both useful and dangerous!
+
+# --------------
+# Matrices
+# --------------
+
+A **matrix** in R is a 2-dimensional data structure. A **matrix** holds a n by m grid of values, with each of the two dimensions (practically) any length. As with atomic vectors, a matrix must contain values of just one type.
+
+# --------------
+## Creating a matrix
+# --------------
+
+You can create a **matrix** using the  **matrix** function. 
+```{r matrix create}
+# 'data' is a vector
+# 'nrow' gives the number of rows
+# 'ncol' gives the number of columns
+# 'byrow' by default is FALSE, so data is read in column-wise
+vect <- c(1,-2,4,6,2.2,12)
+mat <- matrix(data = vect, nrow = 3, ncol = 2)
+mat
+```
+
+## Examine matrix properties
+
+We can examine the properties of this matrix data object.
+```{r matrix properties}
+# dim function gives the dimensions of a matrix
+cat("matrix row-column dimensions:", dim(mat),"\n")
+
+# nrow gives number of rows
+cat("\nmatrix row dimension:", nrow(mat),"\n")
+
+# ncol gives number of rows
+cat("\nmatrix column dimension:", ncol(mat),"\n")
+
+# typeof gives use the type of data
+cat("\nmatrix data type:", typeof(mat),"\n")
+
+# str is also useful
+cat("\nmatrix structure:\n")
+str(mat)
+```
+
+Note that you use *dim* for matrices, *length* to extract the dimensions of vectors.
+
+## name attributes for matrix
+
+We can also name rows or columns by assignment.
+```{r matrix }
+#first look at attributes
+attributes(mat)
+cat("\n")    # blank line
+
+#colnames and rownames functions are used to address column and row name attributes
+colnames(mat) <- c("Var1","Var2")
+mat
+cat("\n")
+rownames(mat) <- c("a","b","c")
+mat
+
+#now look at attributes again
+cat("\n")    # blank line
+attributes(mat)
+```
+
+# use **seq** to generate matrix data
+
+Now we can create a larger matrix with sequenced numbers.
+```{r matrix sequence}
+# create a larger matrix using sequenced numbers
+mat <- matrix(data = 1:20, nrow = 4, ncol = 5)
+mat
+
+cat("\n")
+str(mat)
+```
+
+## Read by rows
+
+What happens if we read in by rows?
+```{r matrix 3}
+# create a larger matrix using sequenced numbers, read in by row
+mat <- matrix(data = 1:20, nrow = 4, ncol = 5, byrow=T)
+mat
+
+cat("\n")
+str(mat)
+```
+
+Note that matrix data is always stored column-wise, even if read in row-wise.
+
+## A few matrix operations
+
+There are many useful matrix operations.
+```{r matrix ops}
+mat
+
+cat("\nTranspose matrix\n")
+t(mat)    # transpose matrix
+
+# num [1:3, 1:2] 1 -2 4 6 2.2 12
+
+cat("\nAnother way to reshape matrix\n")
+dim(mat) <- c(5,4)
+mat
+
+#cat("\nAnother way to reshape matrix\n")
+#dim(mat1) <- c(4,3)
+#mat1
+
+cat("\nCreate square matrix\n")
+mat <- matrix(c(1,3,5,2,0,0,-1,6,0.5),nrow=3,ncol=3)
+mat
+
+cat("\nInvert square matrix\n")
+solve(mat) 
+
+cat("\nmultiply matrices\n")
+round(solve(mat) %*% mat, 3)  # round off multiplication
+```
+
+
+## functions
+
+For expediency, you can write your own functions
+
+```{r}
+?sq   # there is no sq function, but we can create one
+
+sq <- function(x) {
+  y <- x*x
+  return(y)
+}
+
+x <- 4
+sq(4)
+```
+
+Notice that there is no y or x value in our environment. Variables created within a function are not saved outside of the function.
+You need to return these values or otherwise save them if needed. There is a new sq object in our environment.
+
+```{r}
+#source("Rlib.txt")
+```
